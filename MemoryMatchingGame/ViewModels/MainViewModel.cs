@@ -8,6 +8,7 @@ namespace MemoryMatchingGame.ViewModels
     public class MainViewModel : ViewModelBase
     {
         public ObservableCollection<CardViewModel> Cards { get; } = new();
+        public TurnsViewModel Turns { get; } = new();
         private CardViewModel? _firstSelectedCard;
         private DifficultyOption _selectedDifficulty;
         private string _selectedCategory;
@@ -17,12 +18,12 @@ namespace MemoryMatchingGame.ViewModels
         private int _misses;
         private bool _isGameWon;
         private bool _isBusy;
-
+        private bool _isTwoPlayersMode;
+        private string _winnerText = string.Empty;
         private readonly GameService _gameService = new();
         private readonly GameTimerService _timerService = new();
         public IReadOnlyList<DifficultyOption> Difficulties => _gameService.Difficulties;
         public IReadOnlyList<string> Categories => _gameService.Categories;
-
 
         public DifficultyOption SelectedDifficulty
         {
@@ -95,6 +96,20 @@ namespace MemoryMatchingGame.ViewModels
                 return $"{minutes:D2}:{seconds:D2}";
             }
         }
+        public bool IsTwoPlayersMode
+        {
+            get => _isTwoPlayersMode;
+            set
+            {
+                if (SetProperty(ref _isTwoPlayersMode, value))
+                    StartNewGame();
+            }
+        }
+        public string WinnerText
+        {
+            get => _winnerText;
+            set => SetProperty(ref _winnerText, value);
+        }
 
         public RelayCommand FlipCardCommand { get; }
         public RelayCommand RestartCommand { get; }
@@ -123,11 +138,13 @@ namespace MemoryMatchingGame.ViewModels
         }
         private void StartNewGame()
         {
+            Turns.Reset();
             _timerService.Reset();
             Cards.Clear();
             _firstSelectedCard = null;
             _isBusy = false;
             IsGameWon = false;
+            WinnerText = string.Empty;
             Moves = 0;
             Misses = 0;
 
@@ -145,6 +162,7 @@ namespace MemoryMatchingGame.ViewModels
         {
             _timerService.Stop();
             _isBusy = true;
+            WinnerText = IsTwoPlayersMode ? Turns.GetWinnerMessage() : "Winner winner chicken dinner";
             IsGameWon = true;
         }
 
@@ -175,6 +193,12 @@ namespace MemoryMatchingGame.ViewModels
             {
                 _firstSelectedCard.IsMatched = true;
                 clickedCard.IsMatched = true;
+
+                if (IsTwoPlayersMode)
+                {
+                    Turns.CurrentPlayer.Score++;
+                }
+
                 _firstSelectedCard = null;
                 _isBusy = false;
 
@@ -189,6 +213,10 @@ namespace MemoryMatchingGame.ViewModels
                 await Task.Delay(1000);
                 _firstSelectedCard?.IsFlipped = false;
                 clickedCard.IsFlipped = false;
+                if (IsTwoPlayersMode)
+                {
+                    Turns.SwitchTurn();
+                }
                 _firstSelectedCard = null;
                 _isBusy = false;
             }

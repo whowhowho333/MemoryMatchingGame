@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:MemoryMatchingGame.Views"
         xmlns:local="clr-namespace:MemoryMatchingGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200"
+        Title="MainWindow" Height="1000" Width="1100"
         Background="LightGray"
         WindowStartupLocation="CenterScreen">
     

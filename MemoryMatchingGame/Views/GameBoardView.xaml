@@ -5,6 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MemoryMatchingGame.Views"
              mc:Ignorable="d">
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -23,14 +28,14 @@
                     <Setter Property="BorderBrush" Value="LightGray"/>
                     <Setter Property="BorderThickness" Value="1"/>
                     <Setter Property="CornerRadius" Value="8"/>
-                    <Setter Property="Padding" Value="8 6"/>
+                    <Setter Property="Padding" Value="8"/>
                     <Setter Property="Margin" Value="3"/>
                 </Style>
             </UniformGrid.Resources>
 
             <Border>
                 <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Moves" FontSize="14"
+                    <TextBlock Text="Moves" FontSize="16"
                                    FontWeight="SemiBold" Foreground="DodgerBlue"
                                    HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding Moves}" FontSize="14"
@@ -40,7 +45,7 @@
 
             <Border>
                 <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Misses" FontSize="14"
+                    <TextBlock Text="Misses" FontSize="16"
                                    FontWeight="SemiBold" Foreground="DodgerBlue"
                                    HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding Misses}" FontSize="14"
@@ -50,7 +55,7 @@
 
             <Border>
                 <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Accuracy" FontSize="14"
+                    <TextBlock Text="Accuracy" FontSize="16"
                                    FontWeight="SemiBold" Foreground="DodgerBlue"
                                    HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding Accuracy}" FontSize="14"
@@ -60,13 +65,15 @@
 
             <Border>
                 <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Timer" FontSize="14"
+                    <TextBlock Text="Timer" FontSize="16"
                                    FontWeight="SemiBold" Foreground="DodgerBlue"
                                    HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding ElapsedTimeString}" FontSize="14"
                                    FontWeight="SemiBold" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Border>
+
+            
         </UniformGrid>
 
         <Border Grid.Row="2" Margin="20">

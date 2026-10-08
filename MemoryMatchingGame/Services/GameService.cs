@@ -29,14 +29,18 @@ namespace MemoryMatchingGame.Services
                 { 
                     Id = i * 2 - 1, 
                     PairId = i, 
-                    Image = bitmap
+                    Image = bitmap,
+                    IsFlipped = false,
+                    IsMatched = false
                 });
 
                 deck.Add(new Card 
                 { 
                     Id = i * 2, 
                     PairId = i,
-                    Image = bitmap
+                    Image = bitmap,
+                    IsFlipped = false,
+                    IsMatched = false
                 });
             }
             Shuffle(deck);
